@@ -247,16 +247,10 @@ def breakout():
     deets = User.query.get(id)
     if request.method == 'GET':
         topics = Breakout.query.filter(Breakout.break_status==1,Breakout.break_level==deets.user_levelid).all()
-        #regtopics = UserRegistration.query.filter(UserRegistration.userid==id).all()
-        regtopics = [x.breakid for x in deets.myregistrations] #deets.myregistrations
-
-        return render_template('user/mybreakout.html', deets=deets, topics=topics, regtopics=regtopics)
+        return render_template('user/mybreakout.html', deets=deets, topics=topics)
     else:
         #retrieve the form data
         mytopics = request.form.getlist('topicid')
-        #delete his previous registrations before you insert
-        db.session.execute(db.text(f"DELETE FROM user_registration WHERE userid={id}"))
-        db.session.commit()
         if mytopics:
             for t in mytopics:
                 user_reg = UserRegistration(userid=id,breakid=t)

@@ -3,6 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+class UserRegistration(db.Model):
+    reg_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.user_id'))
+    breakid = db.Column(db.Integer, db.ForeignKey('breakout.break_id'))
+    datereg = db.Column(db.DateTime(), default=datetime.utcnow)
+
+    #relationship
+    user_who_registered = db.relationship("User", backref="myregistrations")
+
 class State(db.Model):
     state_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
     state_name = db.Column(db.String(100),nullable=False) 
@@ -35,6 +44,24 @@ class User(db.Model):
     mystate_deets = db.relationship("State", back_populates="state_people")
     mylgadeets = db.relationship("Lga", back_populates="lga_people")
     myleveldeets = db.relationship("Level", back_populates="developers_inlevel")
+
+
+class Donation(db.Model):  
+    donate_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
+    donate_amt = db.Column(db.Float,nullable=False)
+    donate_userid = db.Column(db.Integer,db.ForeignKey('user.user_id'))
+    donate_date = db.Column(db.DateTime(), default=datetime.utcnow)
+
+    donate_status=db.Column(db.Enum('pending','paid','failed'),nullable=False)
+    donate_donor=db.Column(db.String(200),nullable=True) 
+    donate_email=db.Column(db.String(120),nullable=True) 
+    donate_ref=db.Column(db.String(200),nullable=True) 
+    donate_paygate=db.Column(db.String(200),nullable=True) 
+    donate_dateupdated=db.Column(db.DateTime())#default date
+     
+    #set relationships
+    
+    donatedby = db.relationship("User", backref="donordeets")
  
 class Level(db.Model):
     level_id = db.Column(db.Integer, autoincrement=True,primary_key=True)
@@ -58,3 +85,4 @@ class Breakout(db.Model):
     break_level = db.Column(db.Integer, db.ForeignKey('level.level_id'))
 
     breakleveldeets = db.relationship("Level", back_populates="level_breakouts")
+    breakregdeets = db.relationship("UserRegistration", backref="regbreakdeets")

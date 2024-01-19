@@ -71,7 +71,7 @@
     <link href="static/heroes.css" rel="stylesheet">
   </head>
   <body> 
-
+    
     <nav class="navbar navbar-expand-md fixed-top">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
@@ -89,7 +89,7 @@
               <a class="nav-link text-white" href="#partner">Accomodation</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#breakout">Breakout Sessions</a>
+              <a class="nav-link text-white" href="/breakout">Breakout Sessions</a>
             </li>
           
           </ul>
@@ -97,7 +97,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
              
               <li class="nav-item">
-                <a class="btn btn-dark noround" href="donations.html">Donate</a>
+                <a class="btn btn-dark noround" href="/donation">Donate</a>
               </li>
               
             </ul>
@@ -123,7 +123,7 @@
             <ul class="member nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
               <li><a href="/dashboard" class="nav-link px-2 " style="color:#FF5714">Dashboard</a></li>
               <li><a href="conversation.html" class="nav-link px-2 link-dark">Conversations</a></li>
-              <li><a href="mybreakout.html" class="nav-link px-2 link-dark">My Sessions</a></li>
+              <li><a href="/breakout/" class="nav-link px-2 link-dark">My Sessions</a></li>
               <li><a href="donations.html" class="nav-link px-2 link-dark">Transaction History</a></li>
             
             </ul>
@@ -158,6 +158,39 @@
   {% endif %}
   <!--menu for logged in user-->
 
+<div class="row"> 
+
+{% if hotels %}
+
+{% if hotels['status'] == 1 %}
+{% for h in hotels['data'] %}
+<div class="col">
+  <img src="{{ h['p_file'] }}" class="img-fluid jiji">
+  <div class="deets"> 
+    <h6> {{ h['p_name'] }} </h6>
+
+  </div>
+</div>
+  {% endfor %}
+
+  {% else %}
+  <div class="col-12">
+    <div class="alert alert-info">
+      {{ hotels['message'] }}
+    </div>
+  </div>
+    {% endif %}
+  {% else %}
+  <div class="col-12"> 
+    <div class="alert alert-info"> Please check again for list of Accomodation</div>
+
+  </div>
+
+{% endif %}
+
+</div>
+
+{{ endif }}
  <!--banner-->
 {% block content %}
 

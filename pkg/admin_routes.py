@@ -13,6 +13,13 @@ from pkg.forms import BreakoutForm
 def admin_dashboard():
     return render_template("admin/dashboard.html")
 
+
+@app.route("/admin/user")
+def admin_user():
+    return render_template("admin/admin_layout.html")
+
+
+
 @app.route('/admin/login', methods=['GET','POST'])
 def admin_login():
     if request.method == 'GET':

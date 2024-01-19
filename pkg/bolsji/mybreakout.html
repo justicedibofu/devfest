@@ -22,8 +22,6 @@
     {% endfor %}
     {% endif %}
       <h3 class="pb-4 mb-4 fst-italic border-bottom">
-
-        {{regtopics}}
       Register for Breakout Sessions ({{ deets.myleveldeets.level_name }})
       </h3>
 
@@ -40,26 +38,18 @@
           </tr>
         </thead>
         <tbody>
-          {% for t in topics: %}
+          {% for t in topics %}
           <tr>
-            <th scope="row"> 
-            {% if t.break_id in regtopics %}  
-            <input class="form-check-input border-dark" type="checkbox" value="{{ t.break_id }}" name="topicid" id="" checked>
-             {% else %} 
-             <input class="form-check-input border-dark" type="checkbox" value="{{ t.break_id }}" name="topicid" id="">
-
-             {%endif%}
-          </th>
-          
+            <th scope="row"> <input class="form-check-input border-dark" type="checkbox" value="{{ t.break_id }}" name="topicid" id=""></th>
             <td> {{ t.break_title }} </td>
             <td>{{ t.breakleveldeets.level_name }}</td>
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           </tr>
-          
           {% endfor %}
+          
         </tbody>
       </table>
-{% else %}
+{% else: %}
 <div class="alert alert-info"> No breakout topic found, please click here to update your profile </div>
 
 {% endif %}
